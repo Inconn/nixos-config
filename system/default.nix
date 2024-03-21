@@ -20,7 +20,7 @@
 
 	programs.git = {
 		enable = true;
-	}
+	};
 
 	networking.nftables.enable = true;
 	
