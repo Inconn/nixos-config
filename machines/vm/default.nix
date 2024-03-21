@@ -3,11 +3,11 @@
 {
 	imports = [
 		./disks.nix
+		./hardware-configuration.nix
 	];
 
 	environment.persistence."/nix/persist" = {
 		directories = [
-			"/etc/secureboot"
 			"/etc/NetworkManager/system-connections"
 		];
 	};
