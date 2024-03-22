@@ -47,6 +47,7 @@ in {
 				else if builtins.isPath (x.directory or null) then x // { directory = toString x.directory; }
 				else x
 			) ([
+				{ directory = "/etc/nixos"; user = "root"; group = "root"; mode = "0755"; }
 				{ directory = "/var/lib/nixos"; user = "root"; group = "root"; mode = "0755"; }
 
 				{ directory = "/var/log"; user = "root"; group = "root"; mode = "0755"; }
