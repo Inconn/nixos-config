@@ -1,4 +1,4 @@
-{ ... }:
+{ config, pkgs, lib, ... }:
 
 {
 	imports = [
@@ -6,11 +6,13 @@
 		./hardware-configuration.nix
 	];
 
-	environment.persistence."/nix/persist" = {
-		directories = [
-			"/etc/NetworkManager/system-connections"
-		];
-	};
+	impermanence.enable = true;
+	impermanence.persistDirectory = "/nix/persist";
+	impermanence.directories = [
+		"/etc/NetworkManager/system-connections"
+	];
+
+	pipewire.enable = true;
 
 	boot.loader = {
 		efi = {
