@@ -8,9 +8,6 @@
 
 	impermanence.enable = true;
 	impermanence.persistDirectory = "/nix/persist";
-	impermanence.directories = [
-		"/etc/NetworkManager/system-connections"
-	];
 
 	pipewire.enable = true;
 

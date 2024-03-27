@@ -57,6 +57,8 @@ in {
 				{ directory = "/var/spool"; user = "root"; group = "root"; mode = "0777"; }
 			] ++ lib.optionals cfg.persistTmp [
 				{ directory = "/tmp"; user = "root"; group = "root"; mode = "1777"; } 
+			] ++ lib.optionals config.networking.networkmanager.enable [
+				{ directory = "/etc/NetworkManager/system-connections"; user = "root"; group = "root"; mode = "0700"; }
 			] ++ cfg.directories);
 			files = map (x:
 				if builtins.isPath x then toString x
