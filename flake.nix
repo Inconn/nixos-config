@@ -28,7 +28,7 @@
 		nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 	};
 
-	outputs = { self, nixpkgs, nixos-hardware, home-manager, disko, impermanence, lanzaboote, ... }@inputs: {
+	outputs = { self, nixpkgs, chaotic, nixos-hardware, home-manager, disko, impermanence, lanzaboote, ... }@inputs: {
 		overlays = {
 			pkg-sets = (
 				final: prev: {
