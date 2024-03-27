@@ -59,6 +59,8 @@ in {
 				{ directory = "/tmp"; user = "root"; group = "root"; mode = "1777"; } 
 			] ++ lib.optionals config.networking.networkmanager.enable [
 				{ directory = "/etc/NetworkManager/system-connections"; user = "root"; group = "root"; mode = "0700"; }
+			] ++ lib.optionals (config.boot?lanzaboote && config.boot.lanzaboote.enable) [
+				config.boot.lanzaboote.pkiBundle
 			] ++ cfg.directories);
 			files = map (x:
 				if builtins.isPath x then toString x

@@ -3,7 +3,10 @@
 
 	inputs = {
 		nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
-#		nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+		nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+		nixpkgs-trunk.url = "github:nixos/nixpkgs";
+
+		chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
 
 		impermanence.url = "github:nix-community/impermanence";
 
@@ -17,10 +20,24 @@
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 
+		lanzaboote = {
+			url = "github:nix-community/lanzaboote/v0.3.0";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
+
 		nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 	};
 
-	outputs = { self, nixpkgs, nixos-hardware, home-manager, disko, impermanence, ... }@inputs: {
+	outputs = { self, nixpkgs, nixos-hardware, home-manager, disko, impermanence, lanzaboote, ... }@inputs: {
+		overlays = {
+			pkg-sets = (
+				final: prev: {
+					unstable = import inputs.nixpkgs-unstable { system = final.system; };
+					trunk = import inputs.nixpkgs-trunk { system = final.system; };
+				}
+			);
+		};
+
 		nixosConfigurations = {
 			vm = nixpkgs.lib.nixosSystem {
 				system = "x86_64-linux";
@@ -30,6 +47,7 @@
 					disko.nixosModules.disko
 					impermanence.nixosModules.impermanence
 					home-manager.nixosModules.home-manager
+					chaotic.nixosModules.default
 				];
 			};
 			t470 = nixpkgs.lib.nixosSystem {
@@ -40,6 +58,10 @@
 					disko.nixosModules.disko
 					impermanence.nixosModules.impermanence
 					home-manager.nixosModules.home-manager
+					lanzaboote.nixosModules.lanzaboote
+					chaotic.nixosModules.default
+					# this laptop is a t470, but, after reviewing the nix files,
+					# i believe the t480 profile will work fine for a t470
 					nixos-hardware.nixosModules.lenovo-thinkpad-t480
 				];
 			};
