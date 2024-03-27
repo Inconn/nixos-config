@@ -11,6 +11,7 @@
 
 	pipewire.enable = true;
 
+	boot.kernelPackages = pkgs.linuxPackages_cachyos;
 	boot.loader = {
 		efi = {
 			canTouchEfiVariables = true;
