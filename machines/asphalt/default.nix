@@ -16,7 +16,7 @@
 
 	services.power-profiles-daemon.enable = lib.mkForce false;
 	services.tlp.enable = true;
-	services.hdapsd.eanble = true;
+	services.hdapsd.enable = true;
 
 	boot.kernelPackages = pkgs.linuxPackages_cachyos;
 	boot.loader = {
