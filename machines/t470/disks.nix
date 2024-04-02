@@ -1,8 +1,8 @@
 {
 	disko.devices = {
 		disk = {
-			vda = {
-				device = "/dev/vda";
+			ssd = {
+				device = "/dev/nvme0n1";
 				type = "disk";
 				content = {
 					type = "gpt";
@@ -22,28 +22,49 @@
 							content = {
 								type = "luks";
 								name = "crypt";
-								extraOpenArgs = [ ];
+								extraFormatArgs = [ "--pbkdf argon2id" ];
 								settings = {
 									allowDiscards = true;
 								};
 								content = {
-									type = "btrfs";
-									extraArgs = [ "-f" ];
+									type = "lvm_pv";
+									vg = "crypt";
+								};
+							};
+						};
+					};
+				};
+			};
+		};
+		lvm_vg = {
+			crypt = {
+				type = "lvm_vg";
+				lvs = {
+					swap = {
+						size = "32G";
+						content = {
+							type = "swap";
+							resumeDevice = true;
+						};
+					};
+					root = {
+						size = "100%";
+						content = {
+							type = "btrfs";
+							extraArgs = [ "-f" ];
 
-									subvolumes = {
-										"/nix" = {
-											mountOptions = [ "compress-force=zstd:9" "noatime" ];
-											mountpoint = "/nix";
-										};
-										"/store" = {
-											mountOptions = [ "compress-force=zstd:15" "noatime" ];
-											mountpoint = "/nix/store";
-										};
-										"/persist" = {
-											mountOptions = [ "compress-force=zstd:9" "noatime" ];
-											mountpoint = "/nix/persist";
-										};
-									};
+							subvolumes = {
+								"/nix" = {
+									mountOptions = [ "compress-force=zstd:9" "noatime" ];
+									mountpoint = "/nix";
+								};
+								"/store" = {
+									mountOptions = [ "compress-force=zstd:15" "noatime" ];
+									mountpoint = "/nix/store";
+								};
+								"/persist" = {
+									mountOptions = [ "compress-force=zstd:9" "noatime" ];
+									mountpoint = "/nix/persist";
 								};
 							};
 						};
