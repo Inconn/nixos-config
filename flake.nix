@@ -58,7 +58,7 @@
 			asphalt = nixpkgs.lib.nixosSystem {
 				system = "x86_64-linux";
 				modules = [
-					./machines/vm
+					./machines/asphalt
 					./system
 					disko.nixosModules.disko
 					impermanence.nixosModules.impermanence
