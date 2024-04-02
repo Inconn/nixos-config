@@ -48,7 +48,7 @@
 						};
 					};
 					root = {
-						size = "100%";
+						size = "100%FREE";
 						content = {
 							type = "btrfs";
 							extraArgs = [ "-f" ];
