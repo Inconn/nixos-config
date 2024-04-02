@@ -65,7 +65,7 @@
 					home-manager.nixosModules.home-manager
 					lanzaboote.nixosModules.lanzaboote
 					chaotic.nixosModules.default
-					nixos-hardware.nixosModules.common-gpu-amd-southern-islands
+					nixos-hardware.nixosModules.common-gpu-amd-sea-islands
 				];
 			};
 			t470 = nixpkgs.lib.nixosSystem {
