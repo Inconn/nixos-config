@@ -3,6 +3,7 @@
 {
 	imports = lib.concatMap import [
 		./modules
+		./modules/programs
 	];
 
 	nix.settings = {

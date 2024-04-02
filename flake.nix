@@ -26,9 +26,14 @@
 		};
 
 		nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+		nixpak = {
+			url = "github:nixpak/nixpak";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
 	};
 
-	outputs = { self, nixpkgs, chaotic, nixos-hardware, home-manager, disko, impermanence, lanzaboote, ... }@inputs: {
+	outputs = { self, nixpkgs, chaotic, nixos-hardware, home-manager, disko, impermanence, lanzaboote, nixpak, ... }@inputs: {
+
 		overlays = {
 			pkg-sets = (
 				final: prev: {
@@ -48,6 +53,19 @@
 					impermanence.nixosModules.impermanence
 					home-manager.nixosModules.home-manager
 					chaotic.nixosModules.default
+				];
+			};
+			asphalt = nixpkgs.lib.nixosSystem {
+				system = "x86_64-linux";
+				modules = [
+					./machines/vm
+					./system
+					disko.nixosModules.disko
+					impermanence.nixosModules.impermanence
+					home-manager.nixosModules.home-manager
+					lanzaboote.nixosModules.lanzaboote
+					chaotic.nixosModules.default
+					nixos-hardware.nixosModules.common-gpu-amd-southern-islands
 				];
 			};
 			t470 = nixpkgs.lib.nixosSystem {
