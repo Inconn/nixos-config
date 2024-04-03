@@ -8,7 +8,7 @@ in {
 
 	config = lib.mkIf cfg.enable {
 		environment.systemPackages = [
-			pkgs.unstable.vesktop
+			pkgs.vesktop
 		];
 	};
 }

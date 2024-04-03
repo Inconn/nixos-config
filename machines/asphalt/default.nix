@@ -1,10 +1,19 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, unstable, ... }:
 
 {
 	imports = [
 		./disks.nix
 		./hardware-configuration.nix
 	];
+	services.xserver.enable = true;
+	services.xserver.displayManager.sddm = {
+		enable = true;
+		wayland.enable = true;
+		wayland.compositor = "kwin";
+	};
+	services.desktopManager.plasma6.enable = true;
+
+	zramSwap.enable = true;
 
 	hardware.amdgpu.loadInInitrd = true;
 	hardware.amdgpu.amdvlk = true;

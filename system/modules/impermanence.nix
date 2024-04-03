@@ -6,27 +6,27 @@ in {
 	# https://github.com/chayleaf/dotfiles/blob/master/system/modules/impermanence.nix
 
 	options = {
-		impermanence = {
-			enable = lib.mkEnableOption {
+		impermanence = with lib; {
+			enable = mkEnableOption {
 				description = "Enable impermanence";
 				default = false;
 			};
-			persistDirectory = lib.mkOption {
-				type = lib.types.path;
+			persistDirectory = mkOption {
+				type = types.path;
 				description = "Path to persist directory";
 			};
-			directories = lib.mkOption {
-				type = with lib.types; listOf (either path attrs);
+			directories = mkOption {
+				type = with types; listOf (either path attrs);
 				default = [ ];
 				description = "Extra directories to persist";
 			};
-			files = lib.mkOption {
-				type = with lib.types; listOf path;
+			files = mkOption {
+				type = with types; listOf path;
 				default = [ ];
 				description = "Extra files to persist";
 			};
-			persistTmp = lib.mkOption {
-				type = lib.types.bool;
+			persistTmp = mkOption {
+				type = types.bool;
 				default = true;
 				description = "Persist tmp & clean on boot";
 			};
@@ -61,6 +61,8 @@ in {
 				{ directory = "/etc/NetworkManager/system-connections"; user = "root"; group = "root"; mode = "0700"; }
 			] ++ lib.optionals (config.boot ? lanzaboote && config.boot.lanzaboote.enable) [
 				config.boot.lanzaboote.pkiBundle
+			] ++ lib.optionals config.hardware.bluetooth.enable [
+				{ directory = "/var/lib/bluetooth"; user = "root"; group = "root"; mode = "0700"; }
 			] ++ cfg.directories);
 			files = map (x:
 				if builtins.isPath x then toString x

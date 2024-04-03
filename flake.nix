@@ -2,9 +2,7 @@
 	description = "My NixOS config flake";
 
 	inputs = {
-		nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
-		nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-		nixpkgs-trunk.url = "github:nixos/nixpkgs";
+		nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
 		chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
 
@@ -34,20 +32,13 @@
 
 	outputs = { self, nixpkgs, chaotic, nixos-hardware, home-manager, disko, impermanence, lanzaboote, nixpak, ... }@inputs: {
 
-		overlays = {
-			pkg-sets = (
-				final: prev: {
-					unstable = import inputs.nixpkgs-unstable { system = final.system; };
-					trunk = import inputs.nixpkgs-trunk { system = final.system; };
-				}
-			);
-		};
-
 		nixosConfigurations = {
-			vm = nixpkgs.lib.nixosSystem {
+			incon-vm = let
 				system = "x86_64-linux";
+			in nixpkgs.lib.nixosSystem {
+				inherit system;
 				modules = [
-					./machines/vm
+					./machines/incon-vm
 					./system
 					disko.nixosModules.disko
 					impermanence.nixosModules.impermanence
@@ -55,8 +46,10 @@
 					chaotic.nixosModules.default
 				];
 			};
-			asphalt = nixpkgs.lib.nixosSystem {
+			asphalt = let
 				system = "x86_64-linux";
+			in nixpkgs.lib.nixosSystem {
+				inherit system;
 				modules = [
 					./machines/asphalt
 					./system
@@ -68,8 +61,10 @@
 					nixos-hardware.nixosModules.common-gpu-amd-sea-islands
 				];
 			};
-			t470 = nixpkgs.lib.nixosSystem {
+			t470 = let
 				system = "x86_64-linux";
+			in nixpkgs.lib.nixosSystem {
+				inherit system;
 				modules = [
 					./machines/t470
 					./system
