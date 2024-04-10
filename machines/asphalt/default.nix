@@ -27,13 +27,21 @@
 	services.tlp.enable = true;
 	services.hdapsd.enable = true;
 
+	environment.systemPackages = with pkgs; [
+		sbctl
+	];
+
 	boot.kernelPackages = pkgs.linuxPackages_cachyos;
 	boot.loader = {
 		efi = {
 			canTouchEfiVariables = true;
 			efiSysMountPoint = "/boot";
 		};
-		systemd-boot.enable = true;
+		systemd-boot.enable = lib.mkForce false;
+	};
+	boot.lanzaboote = {
+		enable = true;
+		pkiBundle = "/etc/secureboot";
 	};
 
 	networking.hostName = "asphalt";
