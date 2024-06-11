@@ -22,7 +22,7 @@
 							content = {
 								type = "luks";
 								name = "crypt";
-								extraFormatArgs = [ "--pbkdf argon2id --key-size 512 --hash sha512 --cipher aes-xts-plain64 --use-random --pbkdf-force-iterations 18 --pbkdf-memory 16777216 --pbkdf-parallel 4" ];
+								extraFormatArgs = [ "--pbkdf argon2id --key-size 512 --hash sha512 --cipher aes-xts-plain64 --use-random --pbkdf-force-iterations 100 --pbkdf-memory 4194304 --pbkdf-parallel 4" ];
 								content = {
 									type = "lvm_pv";
 									vg = "crypt";
