@@ -29,7 +29,12 @@
 	hardware.opengl.enable = true;
 	hardware.opengl.driSupport32Bit = true;
 
+	hardware.opentabletdriver.enable = true;
+	hardware.opentabletdriver.daemon.enable = true;
+	
 	pipewire.enable = true;
+
+	bluetooth.enable = true;
 
 	networking.networkmanager.enable = true;
 
@@ -42,8 +47,8 @@
 		CPU_SCALING_GOVERNOR_ON_AC = "performance";
 		CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
 
-		CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
 		CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
+		CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
 
 		CPU_MIN_PERF_ON_AC = 0;
 		CPU_MAX_PERF_ON_AC = 100;
@@ -61,5 +66,7 @@
 	      };
 	};
 
-	system.stateVersion = "23.11";
+	hardware.enableAllFirmware = true;
+
+	system.stateVersion = "24.05";
 }
